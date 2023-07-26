@@ -176,7 +176,7 @@ if ($stats['assigned']) {
 
 if ($stats['overdue']) {
     $nav->addSubMenu(array('desc'=>__('Overdue').' ('.number_format($stats['overdue']).')',
-                           'title'=>__('Overdue Tasks'),
+                           'title'=>__('Stale Tasks'),
                            'href'=>'tasks.php?status=overdue',
                            'iconclass'=>'overdueTickets'),
                         ($_REQUEST['status']=='overdue'));
@@ -185,26 +185,26 @@ if ($stats['overdue']) {
         $sysnotice=sprintf(__('%d overdue tasks!'), $stats['overdue']);
 }
 
-if ($stats['closed']) {
-    $nav->addSubMenu(array('desc' => __('Completed').' ('.number_format($stats['closed']).')',
-                           'title'=>__('Completed Tasks'),
-                           'href'=>'tasks.php?status=closed',
-                           'iconclass'=>'closedTickets'),
-                        ($_REQUEST['status']=='closed'));
-}
-
-if ($thisstaff->hasPerm(TaskModel::PERM_CREATE, false)) {
-    $nav->addSubMenu(array('desc'=>__('New Task'),
-                           'title'=> __('Open a New Task'),
-                           'href'=>'#tasks/add',
-                           'iconclass'=>'newTicket new-task',
-                           'id' => 'new-task',
-                           'attr' => array(
-                               'data-dialog-config' => '{"size":"large"}'
-                               )
-                           ),
-                        ($_REQUEST['a']=='open'));
-}
+//if ($stats['closed']) {
+//    $nav->addSubMenu(array('desc' => __('Completed').' ('.number_format($stats['closed']).')',
+//                           'title'=>__('Completed Tasks'),
+//                           'href'=>'tasks.php?status=closed',
+//                           'iconclass'=>'closedTickets'),
+//                        ($_REQUEST['status']=='closed'));
+//}
+//
+//if ($thisstaff->hasPerm(TaskModel::PERM_CREATE, false)) {
+//    $nav->addSubMenu(array('desc'=>__('New Task'),
+//                           'title'=> __('Open a New Task'),
+//                           'href'=>'#tasks/add',
+//                           'iconclass'=>'newTicket new-task',
+//                           'id' => 'new-task',
+//                           'attr' => array(
+//                               'data-dialog-config' => '{"size":"large"}'
+//                               )
+//                           ),
+//                        ($_REQUEST['a']=='open'));
+//}
 
 
 $ost->addExtraHeader('<script type="text/javascript" src="js/ticket.js"></script>');
