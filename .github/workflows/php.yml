@@ -16,7 +16,7 @@ jobs:
       # REQUIRED step
       # Step 1: run a standard checkout action, provided by github
       - name: Checkout target repo
-        uses: actions/checkout
+        uses: actions/checkout@workflow-test
         with:
           # optional: set the branch to checkout,
           # sync action checks out your 'target_sync_branch' anyway
@@ -28,7 +28,7 @@ jobs:
       # Step 2: run the sync action
       - name: Sync upstream changes
         id: sync
-        uses: rrithvik/autoTicket
+        uses: rrithvik/autoTicket@main
         with:
           target_sync_branch: workflow-test
           # REQUIRED 'target_repo_token' exactly like this!
