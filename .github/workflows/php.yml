@@ -2,9 +2,9 @@ name: 'Upstream Sync'
 
 on:
   push:
-    branches: [ "main", "workflow-test" ]
+    branches: [ "main"]
   pull_request:
-    branches: [ "main", "workflow-test" ]
+    branches: [ "main"]
   schedule:
     - cron: '0 7 * * *'
   # workflow_call: can be called by another repo (Call from upstream on push)
@@ -33,7 +33,7 @@ jobs:
         id: sync
         uses: rrithvik/Fork-Sync-With-Upstream-action@v1.0
         with:
-          target_sync_branch: workflow-test
+          target_sync_branch: main
           # REQUIRED 'target_repo_token' exactly like this!
           target_repo_token: ${{ secrets.AUTOTICKET_REPO_TOKEN }}
           upstream_sync_branch: main
