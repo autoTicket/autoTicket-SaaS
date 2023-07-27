@@ -9,6 +9,9 @@ on:
     - cron: '0 7 * * *'
   # workflow_call: can be called by another repo (Call from upstream on push)
   workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Test scenario tags'  
 
 jobs:
   sync_latest_from_upstream:
@@ -23,7 +26,7 @@ jobs:
         with:
           # optional: set the branch to checkout,
           # sync action checks out your 'target_sync_branch' anyway
-          ref:  workflow-test
+          ref:  main
           # REQUIRED if your upstream repo is private (see wiki)
           persist-credentials: false
 
