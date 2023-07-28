@@ -63,9 +63,10 @@ jobs:
         run: date
 
   auto-fetch:
+    if: sync_upstream_test.steps.sync.outputs.has_new_commits == 'true'
     uses: autoTicket/autoTicket/.github/workflows/auto-fetch-upstream.yml@main
     with:
-      has_new_commits: ${{ sync_upstream_test.steps.sync.outputs.has_new_commits }}
+      has_new_commits: true
     secrets:
       s_target_repo_token: ${{ secrets.AUTOTICKET_REPO_TOKEN }}
       s_upstream_repo_token: ${{ secrets.UPSTREAM_REPO_SECRET }}
