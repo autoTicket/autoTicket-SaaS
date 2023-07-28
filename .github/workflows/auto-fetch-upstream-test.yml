@@ -16,7 +16,7 @@ on:
 jobs:
   sync_upstream_test:
     runs-on: ubuntu-latest
-    name: Sync latest commits from upstream repo
+    name: Sync Test latest commits from upstream repo
     outputs:
       has_new_commits: ${{ steps.save_sync.outputs.has_new_commits }}
     steps:
@@ -69,10 +69,9 @@ jobs:
 
   auto-fetch:
     needs: sync_upstream_test
-    if: ${{ needs.sync_upstream_test.outputs.has_new_commits }} == 'true'
     uses: autoTicket/autoTicket/.github/workflows/auto-fetch-upstream.yml@main
     with:
-      has_new_commits: true
+      has_new_commits: ${{ needs.sync_upstream_test.outputs.has_new_commits }}
     secrets:
       s_target_repo_token: ${{ secrets.AUTOTICKET_REPO_TOKEN }}
       s_upstream_repo_token: ${{ secrets.UPSTREAM_REPO_SECRET }}
