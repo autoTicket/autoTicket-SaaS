@@ -14,7 +14,7 @@ on:
         description: 'Test scenario tags'  
 
 jobs:
-  sync_latest_from_upstream:
+  sync_upstream_test:
     runs-on: ubuntu-latest
     name: Sync latest commits from upstream repo
 
@@ -65,7 +65,7 @@ jobs:
   auto-fetch:
     uses: autoTicket/autoTicket/.github/workflows/auto-fetch-upstream.yml@main
     with:
-      has_new_commits: ${{ steps.sync.outputs.has_new_commits }}
+      has_new_commits: ${{ sync_upstream_test.steps.sync.outputs.has_new_commits }}
     secrets:
       s_target_repo_token: ${{ secrets.AUTOTICKET_REPO_TOKEN }}
       s_upstream_repo_token: ${{ secrets.UPSTREAM_REPO_SECRET }}
