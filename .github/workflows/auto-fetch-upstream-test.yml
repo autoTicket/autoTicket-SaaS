@@ -1,4 +1,4 @@
-name: 'Upstream Sync'
+name: 'Upstream Auto-Fetch Test'
 
 on:
   push:
@@ -44,7 +44,7 @@ jobs:
           upstream_repo_access_token: ${{ secrets.UPSTREAM_REPO_SECRET }}
 
           # Set test_mode true to run tests instead of the true action!!
-          test_mode: false
+          test_mode: true
 
       # Step 3: Display a sample message based on the sync output var 'has_new_commits'
       - name: New commits found
@@ -61,3 +61,12 @@ jobs:
       # Print Timestamp
       - name: Print Timestamp
         run: date
+
+  auto-fetch:
+    uses: autoTicket/autoTicket/.github/workflows/auto-fetch-upstream.yml@main
+    with:
+      has_new_commits: ${{ steps.sync.outputs.has_new_commits }}
+    secrets:
+      s_target_repo_token: ${{ secrets.AUTOTICKET_REPO_TOKEN }}
+      s_upstream_repo_token: ${{ secrets.UPSTREAM_REPO_SECRET }}
+
