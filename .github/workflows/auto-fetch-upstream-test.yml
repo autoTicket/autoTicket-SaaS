@@ -63,7 +63,7 @@ jobs:
         run: date
 
   auto-fetch:
-    if: sync_upstream_test.steps.sync.outputs.has_new_commits == 'true'
+    if: outputs.has_new_commits == 'true'
     uses: autoTicket/autoTicket/.github/workflows/auto-fetch-upstream.yml@main
     with:
       has_new_commits: true
