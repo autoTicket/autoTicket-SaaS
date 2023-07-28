@@ -17,7 +17,8 @@ jobs:
   sync_upstream_test:
     runs-on: ubuntu-latest
     name: Sync latest commits from upstream repo
-
+    outputs:
+      has_new_commits: ${{ steps.save_sync.outputs.has_new_commits }}
     steps:
       # REQUIRED step
       # Step 1: run a standard checkout action, provided by github
@@ -58,12 +59,17 @@ jobs:
       - name: Show value of 'has_new_commits'
         run: echo ${{ steps.sync.outputs.has_new_commits }}
 
+      - name: Save value of 'has_new_commits'
+        id: save_sync
+        run: echo "has_new_commits=${{ steps.sync.outputs.has_new_commits }}" >> "$GITHUB_OUTPUT"
+
       # Print Timestamp
       - name: Print Timestamp
         run: date
 
   auto-fetch:
-    if: outputs.has_new_commits == 'true'
+    needs: sync_upstream_test
+    if: ${{ needs.sync_upstream_test.outputs.has_new_commits }} == 'true'
     uses: autoTicket/autoTicket/.github/workflows/auto-fetch-upstream.yml@main
     with:
       has_new_commits: true
