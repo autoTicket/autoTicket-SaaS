@@ -1,17 +1,16 @@
 name: 'Upstream Auto-Fetch Test'
 
 on:
-  push:
-    branches: [ "main"]
-  pull_request:
-    branches: [ "main"]
-  schedule:
-    - cron: '0 7 * * *'
-  # workflow_call: can be called by another repo (Call from upstream on push)
-  workflow_dispatch:
+  workflow_call:
     inputs:
-      tags:
-        description: 'Test scenario tags'  
+      has_new_commits:
+        type: boolean
+        required: false
+    secrets:
+      s_target_repo_token:
+        required: true
+      s_upstream_repo_token:
+        required: true
 
 jobs:
   sync_upstream_test:
@@ -39,10 +38,10 @@ jobs:
         with:
           target_sync_branch: main
           # REQUIRED 'target_repo_token' exactly like this!
-          target_repo_token: ${{ secrets.AUTOTICKET_REPO_TOKEN }}
+          target_repo_token: ${{ secrets.s_target_repo_token }}
           upstream_sync_branch: main
           upstream_sync_repo: rrithvik/autoTicket
-          upstream_repo_access_token: ${{ secrets.UPSTREAM_REPO_SECRET }}
+          upstream_repo_access_token: ${{ secrets.s_upstream_repo_token }}
 
           # Set test_mode true to run tests instead of the true action!!
           test_mode: true
@@ -71,8 +70,9 @@ jobs:
     needs: sync_upstream_test
     uses: autoTicket/autoTicket/.github/workflows/auto-fetch-upstream.yml@main
     with:
-      has_new_commits: ${{ needs.sync_upstream_test.outputs.has_new_commits }}
+#      has_new_commits: ${{ needs.sync_upstream_test.outputs.has_new_commits }}
+      has_new_commits: true
     secrets:
-      s_target_repo_token: ${{ secrets.AUTOTICKET_REPO_TOKEN }}
-      s_upstream_repo_token: ${{ secrets.UPSTREAM_REPO_SECRET }}
+      s_target_repo_token: ${{ secrets.s_target_repo_token }}
+      s_upstream_repo_token: ${{ secrets.s_upstream_repo_token }}
 
