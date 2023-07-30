@@ -46,6 +46,8 @@ jobs:
           upstream_sync_branch: main
           upstream_sync_repo: rrithvik/autoTicket
           upstream_repo_access_token: ${{ secrets.UPSTREAM_REPO_TOKEN}}
+          git_config_user: 'rrithvik'
+          git_config_email: 'rrithvik2001@gmail.com'
           upstream_pull_args: '--allow-unrelated-histories'
           # Set test_mode true to run tests instead of the true action!!
           test_mode: false
