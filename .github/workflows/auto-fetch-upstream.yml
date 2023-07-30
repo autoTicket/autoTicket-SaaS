@@ -1,6 +1,12 @@
 name: 'Upstream Auto-Fetch'
 
 on:
+  workflow_dispatch:
+    inputs:
+      has_new_commits:
+        default: true
+        description: 'New Commits'
+        required: false
   workflow_call:
     inputs:
       has_new_commits:
