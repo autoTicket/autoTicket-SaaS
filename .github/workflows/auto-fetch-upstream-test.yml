@@ -2,6 +2,11 @@ name: 'Upstream Auto-Fetch Test'
 
 on:
   workflow_dispatch:
+    inputs:
+      has_new_commits:
+        default: true
+        description: 'New Commits'
+        required: false
   workflow_call:
     inputs:
       has_new_commits:
@@ -39,10 +44,10 @@ jobs:
         with:
           target_sync_branch: main
           # REQUIRED 'target_repo_token' exactly like this!
-          target_repo_token: ${{ secrets.s_target_repo_token }}
+          target_repo_token: ${{ secrets.AUTOTICKET_REPO_TOKEN }}
           upstream_sync_branch: main
           upstream_sync_repo: rrithvik/autoTicket
-          upstream_repo_access_token: ${{ secrets.s_upstream_repo_token }}
+          upstream_repo_access_token: ${{ secrets.UPSTREAM_REPO_TOKEN }}
 
           # Set test_mode true to run tests instead of the true action!!
           test_mode: true
@@ -74,6 +79,6 @@ jobs:
 #      has_new_commits: ${{ needs.sync_upstream_test.outputs.has_new_commits }}
       has_new_commits: true
     secrets:
-      s_target_repo_token: ${{ secrets.s_target_repo_token }}
-      s_upstream_repo_token: ${{ secrets.s_upstream_repo_token }}
+      s_target_repo_token: ${{ secrets.AUTOTICKET_REPO_TOKEN }}
+      s_upstream_repo_token: ${{ secrets.UPSTREAM_REPO_TOKEN }}
 
