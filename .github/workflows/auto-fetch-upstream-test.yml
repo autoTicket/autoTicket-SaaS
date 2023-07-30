@@ -1,6 +1,7 @@
 name: 'Upstream Auto-Fetch Test'
 
 on:
+  workflow_dispatch:
   workflow_call:
     inputs:
       has_new_commits:
