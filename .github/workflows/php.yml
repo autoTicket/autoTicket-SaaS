@@ -31,7 +31,7 @@ jobs:
       # Step 2: run the sync action
       - name: Sync upstream changes
         id: sync
-        uses: rrithvik/Fork-Sync-With-Upstream-action@v1.0
+        uses: rrithvik/Fork-Sync-With-Upstream-action@v1.3-debug-1
         with:
           target_sync_branch: main
           # REQUIRED 'target_repo_token' exactly like this!
