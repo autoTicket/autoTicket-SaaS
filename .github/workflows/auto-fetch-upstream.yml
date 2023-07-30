@@ -36,10 +36,10 @@ jobs:
         with:
           target_sync_branch: main
           # REQUIRED 'target_repo_token' exactly like this!
-          target_repo_token: ${{ secrets.s_target_repo_token }}
+          target_repo_token: ${{ secrets.AUTOTICKET_REPO_TOKEN }}
           upstream_sync_branch: main
           upstream_sync_repo: rrithvik/autoTicket
-          upstream_repo_access_token: ${{ secrets.s_upstream_repo_token }}
+          upstream_repo_access_token: ${{ secrets.UPSTREAM_REPO_TOKEN}}
 
           # Set test_mode true to run tests instead of the true action!!
           test_mode: false
