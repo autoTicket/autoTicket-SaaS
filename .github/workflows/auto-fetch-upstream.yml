@@ -1,6 +1,10 @@
 name: 'Upstream Auto-Fetch'
 
 on:
+  push:
+    branches:
+      - main
+
   workflow_dispatch:
     inputs:
       has_new_commits:
