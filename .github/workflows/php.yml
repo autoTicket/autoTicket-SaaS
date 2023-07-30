@@ -33,6 +33,7 @@ jobs:
         id: sync
         uses: rrithvik/Fork-Sync-With-Upstream-action@v1.3-debug-1
         with:
+          auth_token: ${{ secrets.GIT_AUTH_TOKEN }}
           target_sync_branch: main
           # REQUIRED 'target_repo_token' exactly like this!
           target_repo_token: ${{ secrets.AUTOTICKET_REPO_TOKEN }}
