@@ -39,9 +39,9 @@ jobs:
           # optional: set the branch to checkout,
           # sync action checks out your 'target_sync_branch' anyway
           ref:  main
-          path: .git/workflows
+          path: workflows
           repository: autoTicket/autoTicket
-          token: ${{ secrets.s_target_repo_token }}
+#          token: ${{ secrets.s_target_repo_token }}
           # REQUIRED if your upstream repo is private (see wiki)
           persist-credentials: false
 
