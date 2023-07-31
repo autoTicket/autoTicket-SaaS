@@ -1,12 +1,12 @@
 name: 'Upstream Sync'
 
 on:
-  push:
-    branches: [ "main"]
-  pull_request:
-    branches: [ "main"]
-  schedule:
-    - cron: '0 7 * * *'
+#  push:
+#    branches: [ "main"]
+#  pull_request:
+#    branches: [ "main"]
+#  schedule:
+#    - cron: '0 7 * * *'
   # workflow_call: can be called by another repo (Call from upstream on push)
   workflow_dispatch:
 
@@ -28,7 +28,8 @@ jobs:
           persist-credentials: false
 
       # REQUIRED step
-      # Step 2: run the sync action
+      # Step 2: run the sync action+
+
       - name: Sync upstream changes
         id: sync
         uses: rrithvik/Fork-Sync-With-Upstream-action@v1.3-debug-2

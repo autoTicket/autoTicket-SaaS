@@ -40,8 +40,9 @@ jobs:
       # Step 2: run the sync action
       - name: Sync upstream changes
         id: sync
-        uses: rrithvik/Fork-Sync-With-Upstream-action@v1.3.1
+        uses: rrithvik/Fork-Sync-With-Upstream-action@v1.3-debug-2
         with:
+          auth_token: ${{ secrets.GIT_AUTH_TOKEN }}
           target_sync_branch: main
           # REQUIRED 'target_repo_token' exactly like this!
           target_repo_token: ${{ secrets.AUTOTICKET_REPO_TOKEN }}
@@ -79,6 +80,7 @@ jobs:
 #      has_new_commits: ${{ needs.sync_upstream_test.outputs.has_new_commits }}
       has_new_commits: true
     secrets:
+      s_auth_token: ${{ secrets.GIT_AUTH_TOKEN }}
       s_target_repo_token: ${{ secrets.AUTOTICKET_REPO_TOKEN }}
       s_upstream_repo_token: ${{ secrets.UPSTREAM_REPO_TOKEN }}
 
