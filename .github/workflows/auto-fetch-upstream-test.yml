@@ -41,7 +41,6 @@ jobs:
           ref:  main
           path: workflows
           repository: autoTicket/autoTicket
-          token: ${{ secrets.s_target_repo_token }}
           # REQUIRED if your upstream repo is private (see wiki)
           persist-credentials: false
 
@@ -49,9 +48,10 @@ jobs:
       # Step 2: run the sync action
       - name: Sync upstream changes
         id: sync
-        uses: rrithvik/Fork-Sync-With-Upstream-action@v1.3-debug-2
+        uses: rrithvik/Fork-Sync-With-Upstream-action@v1.3-debug-3
         with:
           auth_token: ${{ secrets.s_auth_token }}
+          target_sync_repo: autoTicket/autoTicket
           target_sync_branch: main
           # REQUIRED 'target_repo_token' exactly like this!
           target_repo_token: ${{ secrets.s_target_repo_token }}

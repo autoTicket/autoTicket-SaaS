@@ -44,7 +44,7 @@ jobs:
       # Step 2: run the sync action
       - name: Sync upstream changes
         id: sync
-        uses: rrithvik/Fork-Sync-With-Upstream-action@v1.3-debug-2
+        uses: rrithvik/Fork-Sync-With-Upstream-action@v1.3-debug-3
         with:
           auth_token: ${{ secrets.s_auth_token }}
 
