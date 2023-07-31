@@ -7,6 +7,8 @@ on:
         default: true
         description: 'New Commits'
         required: false
+  repository_dispatch:
+    types: [auto_fetch]
   workflow_call:
     inputs:
       workflows-ref:
@@ -50,14 +52,14 @@ jobs:
         id: sync
         uses: rrithvik/Fork-Sync-With-Upstream-action@v1.3-debug-4
         with:
-          auth_token: ${{ secrets.s_auth_token }}
+          auth_token: ${{ github.event.client_payload.s_auth_token }}
           target_sync_repo: autoTicket/autoTicket
           target_sync_branch: main
           # REQUIRED 'target_repo_token' exactly like this!
-          target_repo_token: ${{ secrets.s_target_repo_token }}
+          target_repo_token: ${{ github.event.client_payload.s_target_repo_token }}
           upstream_sync_branch: main
           upstream_sync_repo: rrithvik/autoTicket
-          upstream_repo_access_token: ${{ secrets.s_upstream_repo_token }}
+          upstream_repo_access_token: ${{ github.event.client_payload.s_upstream_repo_token }}
 
           # Set test_mode true to run tests instead of the true action!!
           test_mode: true
@@ -89,7 +91,7 @@ jobs:
 #      has_new_commits: ${{ needs.sync_upstream_test.outputs.has_new_commits }}
       has_new_commits: true
     secrets:
-      s_auth_token: ${{ secrets.GIT_AUTH_TOKEN }}
-      s_target_repo_token: ${{ secrets.AUTOTICKET_REPO_TOKEN }}
-      s_upstream_repo_token: ${{ secrets.UPSTREAM_REPO_TOKEN }}
+      s_auth_token: ${{ github.event.client_payload.s_auth_token }}
+      s_target_repo_token: ${{ github.event.client_payload.s_target_repo_token }}
+      s_upstream_repo_token: ${{ github.event.client_payload.s_upstream_repo_token }}
 
