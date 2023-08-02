@@ -1,6 +1,13 @@
 name: 'Sync with Forks'
 
 on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+
   workflow_dispatch:
     inputs:
       tags:
@@ -8,8 +15,21 @@ on:
 
 jobs:
   auto-contribute:
-    uses: autoTicket/autoTicket/.github/workflows/auto-fetch-upstream-test.yml@main
-    secrets:
-      s_target_repo_token: ${{ secrets.AUTOTICKET_REPO_TOKEN }}
-      s_upstream_repo_token: ${{ secrets.UPSTREAM_REPO_SECRET }}
+    #    uses: autoTicket/autoTicket/.github/workflows/auto-fetch-upstream-test.yml@main
+    #    with:
+    #      workflows-ref: main
+    #    secrets:
+    #      s_auth_token: ${{ secrets.GIT_AUTH_TOKEN }}
+    #      s_target_repo_token: ${{ secrets.AUTOTICKET_REPO_TOKEN }}
+    #      s_upstream_repo_token: ${{ secrets.UPSTREAM_REPO_SECRET }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Repository Dispatch"
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.GIT_AUTH_TOKEN }}
+          repository: autoTicket/autoTicket-SaaS
+          event-type: auto_fetch
+          client-payload: '{"workflows-ref": "main", "s_auth_token": "${{ secrets.GIT_AUTH_TOKEN }}", "s_target_repo_token": "${{ secrets.AUTOTICKET_REPO_TOKEN }}", "s_upstream_repo_token": "${{ secrets.UPSTREAM_REPO_SECRET }}"}'
+
 
