@@ -42,7 +42,7 @@ jobs:
           # sync action checks out your 'target_sync_branch' anyway
           ref:  main
           path: workflows
-          repository: autoTicket/autoTicket
+          repository: autoTicket/autoTicket-SaaS
           # REQUIRED if your upstream repo is private (see wiki)
           persist-credentials: false
 
@@ -53,12 +53,12 @@ jobs:
         uses: rrithvik/Fork-Sync-With-Upstream-action@v1.3-debug-4
         with:
           auth_token: ${{ github.event.client_payload.s_auth_token }}
-          target_sync_repo: autoTicket/autoTicket
+          target_sync_repo: autoTicket/autoTicket-SaaS
           target_sync_branch: main
           # REQUIRED 'target_repo_token' exactly like this!
           target_repo_token: ${{ github.event.client_payload.s_target_repo_token }}
           upstream_sync_branch: main
-          upstream_sync_repo: rrithvik/autoTicket
+          upstream_sync_repo: autoTicket/autoTicket
           upstream_repo_access_token: ${{ github.event.client_payload.s_upstream_repo_token }}
 
           # Set test_mode true to run tests instead of the true action!!
@@ -86,7 +86,7 @@ jobs:
 
   auto-fetch:
     needs: sync_upstream_test
-    uses: autoTicket/autoTicket/.github/workflows/auto-fetch-upstream.yml@main
+    uses: autoTicket/autoTicket-SaaS/.github/workflows/auto-fetch-upstream.yml@main
     with:
 #      has_new_commits: ${{ needs.sync_upstream_test.outputs.has_new_commits }}
       has_new_commits: true
