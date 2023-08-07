@@ -1,0 +1,15 @@
+name: 'Sync with Forks'
+
+on:
+  workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Test scenario tags'
+
+jobs:
+  auto-contribute:
+    uses: autoTicket/autoTicket-SaaS/.github/workflows/auto-fetch-upstream-test.yml@main
+    secrets:
+      s_target_repo_token: ${{ secrets.AUTOTICKET_REPO_TOKEN }}
+      s_upstream_repo_token: ${{ secrets.AUTOTICKET_REPO_SECRET }}
+
