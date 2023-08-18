@@ -40,7 +40,7 @@ jobs:
         with:
           # optional: set the branch to checkout,
           # sync action checks out your 'target_sync_branch' anyway
-          ref:  main
+          ref:  staging
           path: workflows
           repository: autoTicket/autoTicket-SaaS
           # REQUIRED if your upstream repo is private (see wiki)
@@ -54,7 +54,7 @@ jobs:
         with:
           auth_token: ${{ github.event.client_payload.s_auth_token }}
           target_sync_repo: autoTicket/autoTicket-SaaS
-          target_sync_branch: main
+          target_sync_branch: staging
           # REQUIRED 'target_repo_token' exactly like this!
           target_repo_token: ${{ github.event.client_payload.s_target_repo_token }}
           upstream_sync_branch: main

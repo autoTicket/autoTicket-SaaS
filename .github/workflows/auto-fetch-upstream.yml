@@ -24,8 +24,9 @@ on:
       s_auth_token:
         required: true
 jobs:
-  sync_latest_from_upstream:
+  sync_staging_from_upstream:
     runs-on: ubuntu-latest
+    environment: 'dev'
     name: Sync latest commits from upstream repo
 
     steps:
@@ -36,7 +37,58 @@ jobs:
         with:
           # optional: set the branch to checkout,
           # sync action checks out your 'target_sync_branch' anyway
-          ref:  main
+          ref:  staging
+          # REQUIRED if your upstream repo is private (see wiki)
+          persist-credentials: false
+
+      # REQUIRED step
+      # Step 2: run the sync action
+      - name: Sync upstream changes
+        id: sync
+        uses: rrithvik/Fork-Sync-With-Upstream-action@v1.3-debug-4
+        with:
+          auth_token: ${{ secrets.s_auth_token }}
+          target_sync_branch: staging
+          # REQUIRED 'target_repo_token' exactly like this!
+          target_repo_token: ${{ secrets.s_target_repo_token }}
+          upstream_sync_branch: main
+          upstream_sync_repo: autoTicket/autoTicket
+          upstream_repo_access_token: ${{ secrets.s_upstream_repo_token }}
+          upstream_pull_args: '--allow-unrelated-histories'
+          # Set test_mode true to run tests instead of the true action!!
+          test_mode: false
+
+      # Step 3: Display a sample message based on the sync output var 'has_new_commits'
+      - name: New commits found
+        if: steps.sync.outputs.has_new_commits == 'true'
+        run: echo "New commits were found to sync."
+
+      - name: No new commits
+        if: steps.sync.outputs.has_new_commits == 'false'
+        run: echo "There were no new commits."
+
+      - name: Show value of 'has_new_commits'
+        run: echo ${{ steps.sync.outputs.has_new_commits }}
+
+      # Print Timestamp
+      - name: Print Timestamp
+        run: date
+
+  sync_prod_from_upstream:
+    runs-on: ubuntu-latest
+    environment: 'prod'
+    needs: sync_staging_from_upstream
+    name: Sync latest commits from upstream repo
+
+    steps:
+      # REQUIRED step
+      # Step 1: run a standard checkout action, provided by github
+      - name: Checkout target repo
+        uses: actions/checkout@v3
+        with:
+          # optional: set the branch to checkout,
+          # sync action checks out your 'target_sync_branch' anyway
+          ref: main
           # REQUIRED if your upstream repo is private (see wiki)
           persist-credentials: false
 
@@ -50,9 +102,9 @@ jobs:
           target_sync_branch: main
           # REQUIRED 'target_repo_token' exactly like this!
           target_repo_token: ${{ secrets.s_target_repo_token }}
-          upstream_sync_branch: main
-          upstream_sync_repo: autoTicket/autoTicket
-          upstream_repo_access_token: ${{ secrets.s_upstream_repo_token }}
+          upstream_sync_branch: staging
+          upstream_sync_repo: autoTicket/autoTicket-SaaS
+          upstream_repo_access_token: ${{ secrets.s_target_repo_token }}
           upstream_pull_args: '--allow-unrelated-histories'
           # Set test_mode true to run tests instead of the true action!!
           test_mode: false
