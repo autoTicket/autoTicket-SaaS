@@ -1,61 +1,72 @@
 <?php
 /*********************************************************************
-    ost-config.php
-
-    Static osTicket configuration file. Mainly useful for mysql login info.
-    Created during installation process and shouldn't change even on upgrades.
-
-    Peter Rotich <peter@osticket.com>
-    Copyright (c)  2006-2010 osTicket
-    http://www.osticket.com
-
-    Released under the GNU General Public License WITHOUT ANY WARRANTY.
-    See LICENSE.TXT for details.
-
-    vim: expandtab sw=4 ts=4 sts=4:
-    $Id: $
-**********************************************************************/
+ * ost-config.php
+ *
+ * Static osTicket configuration file. Mainly useful for mysql login info.
+ * Created during installation process and shouldn't change even on upgrades.
+ *
+ * Peter Rotich <peter@osticket.com>
+ * Copyright (c)  2006-2010 osTicket
+ * http://www.osticket.com
+ *
+ * Released under the GNU General Public License WITHOUT ANY WARRANTY.
+ * See LICENSE.TXT for details.
+ *
+ * vim: expandtab sw=4 ts=4 sts=4:
+ * $Id: $
+ **********************************************************************/
 
 #Disable direct access.
-if(!strcasecmp(basename($_SERVER['SCRIPT_NAME']),basename(__FILE__)) || !defined('INCLUDE_DIR'))
+if (!strcasecmp(basename($_SERVER['SCRIPT_NAME']), basename(__FILE__)) || !defined('INCLUDE_DIR'))
     die('kwaheri rafiki!');
 
 #Install flag
-define('OSTINSTALLED',TRUE);
-if(OSTINSTALLED!=TRUE){
-    if(!file_exists(ROOT_DIR.'setup/install.php')) die('Error: Contact system admin.'); //Something is really wrong!
+define('OSTINSTALLED', TRUE);
+if (OSTINSTALLED != TRUE) {
+    if (!file_exists(ROOT_DIR . 'setup/install.php')) die('Error: Contact system admin.'); //Something is really wrong!
     //Invoke the installer.
-    header('Location: '.ROOT_PATH.'setup/install.php');
+    header('Location: ' . ROOT_PATH . 'setup/install.php');
     exit;
 }
 
 # Encrypt/Decrypt secret key - randomly generated during installation.
-define('SECRET_SALT','tOPEnIb7Rx89vXnlBps086SejGlj0dIV');
+define('SECRET_SALT', 'tOPEnIb7Rx89vXnlBps086SejGlj0dIV');
 
 #Default admin email. Used only on db connection issues and related alerts.
-define('ADMIN_EMAIL','mary@ticket.com');
+define('ADMIN_EMAIL', 'mary@ticket.com');
 
 require_once 'saasops.php';
-
- # echo TNAME;
+$mt = getenv('SAASOPS_MT');
+if ($mt == "False") {
+    define('DBNAME', getenv('SAASOPS_DBNAME'));
+} else {
+    require_once 'saasops.php';
+}
+# echo TNAME;
 
 # Database Options
 # ====================================================
 # Mysql Login info
 #
-define('DBTYPE','mysql');
+define('DBTYPE', 'mysql');
 #  DBHOST can have comma separated hosts (e.g db1:6033,db2:6033)
-define('DBHOST','ls-9bd9b6a875c05312d67a611ace5ed6e28ca83153.ccw5zzzs6ebf.us-east-1.rds.amazonaws.com');
+if (getenv('SAASOPS_DBHOST') !== false) {
+    define('DBHOST', getenv('SAASOPS_DBHOST'));
 # define('DBNAME','autoticket');
-define('DBUSER','dbmasteruser');
-define('DBPASS','PeCIEmwomhb[L{%w>t~FAT7uYX$unLN9');
-
+    define('DBUSER', getenv('SAASOPS_DBUSER'));
+    define('DBPASS', getenv('SAASOPS_DBPASS'));
+} else {
+    define('DBHOST', 'ls-9bd9b6a875c05312d67a611ace5ed6e28ca83153.ccw5zzzs6ebf.us-east-1.rds.amazonaws.com');
+# define('DBNAME','autoticket');
+    define('DBUSER', 'dbmasteruser');
+    define('DBPASS', 'PeCIEmwomhb[L{%w>t~FAT7uYX$unLN9');
+}
 # Database TCP/IP Connect Timeout (default: 3 seconds)
 # Timeout is important when DBHOST has multiple proxies to try
 # define('DBCONNECT_TIMEOUT', 3);
 
 # Table prefix
-define('TABLE_PREFIX','aut_');
+define('TABLE_PREFIX', 'aut_');
 
 #
 # SSL Options
