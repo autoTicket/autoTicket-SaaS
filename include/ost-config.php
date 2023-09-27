@@ -35,7 +35,6 @@ define('SECRET_SALT', 'tOPEnIb7Rx89vXnlBps086SejGlj0dIV');
 #Default admin email. Used only on db connection issues and related alerts.
 define('ADMIN_EMAIL', 'mary@ticket.com');
 
-require_once 'saasops.php';
 $mt = getenv('SAASOPS_MT');
 if ($mt == "False") {
     define('DBNAME', getenv('SAASOPS_DBNAME'));
@@ -51,7 +50,7 @@ define('DBTYPE', 'mysql');
 #  DBHOST can have comma separated hosts (e.g db1:6033,db2:6033)
 if (getenv('SAASOPS_DBHOST') !== false) {
     define('DBHOST', getenv('SAASOPS_DBHOST'));
-    define('DBNAME','aut_v1');
+    # define('DBNAME','aut_v1');
     define('DBUSER', getenv('SAASOPS_DBUSER'));
     define('DBPASS', getenv('SAASOPS_DBPASS'));
 } else {
