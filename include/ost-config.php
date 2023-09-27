@@ -37,10 +37,11 @@ define('ADMIN_EMAIL', 'mary@ticket.com');
 
 require_once 'saasops.php';
 $mt = getenv('SAASOPS_MT');
-echo($mt);
 if ($mt == "False") {
+    echo($mt);
     define('DBNAME', getenv('SAASOPS_DBNAME'));
 } else {
+    echo("True");
     require_once 'saasops.php';
 }
 # echo TNAME;
