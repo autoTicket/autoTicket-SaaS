@@ -44,7 +44,7 @@ if ($mt == "False") {
     echo("True");
     require_once 'saasops.php';
 }
-# echo TNAME;
+echo TNAME;
 
 # Database Options
 # ====================================================
