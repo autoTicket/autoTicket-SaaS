@@ -38,13 +38,10 @@ define('ADMIN_EMAIL', 'mary@ticket.com');
 require_once 'saasops.php';
 $mt = getenv('SAASOPS_MT');
 if ($mt == "False") {
-    echo($mt);
     define('DBNAME', getenv('SAASOPS_DBNAME'));
 } else {
-    echo("True");
     require_once 'saasops.php';
 }
-echo TNAME;
 
 # Database Options
 # ====================================================
@@ -54,7 +51,7 @@ define('DBTYPE', 'mysql');
 #  DBHOST can have comma separated hosts (e.g db1:6033,db2:6033)
 if (getenv('SAASOPS_DBHOST') !== false) {
     define('DBHOST', getenv('SAASOPS_DBHOST'));
-# define('DBNAME','autoticket');
+    define('DBNAME','aut_v1');
     define('DBUSER', getenv('SAASOPS_DBUSER'));
     define('DBPASS', getenv('SAASOPS_DBPASS'));
 } else {
