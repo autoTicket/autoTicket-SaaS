@@ -10,7 +10,7 @@ all your support requests and responses in one place while providing your
 customers with accountability and responsiveness they deserve.
 
 How autoTicket works for you
---------------------------
+-----------------------------
   1. Users create tickets via your website, email, or phone
   1. Incoming tickets are saved and assigned to agents
   1. Agents help your users resolve their issues
